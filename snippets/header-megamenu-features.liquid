@@ -1,0 +1,47 @@
+{% assign link_blocks = nil | sort %}
+
+{% for block in blocks %}
+  {% assign block_menu_link_name = block.settings.menu_link_name %}
+  {% assign block_menu_link_handle = block_menu_link_name | handle %}
+
+  {% if block_menu_link_handle == link.handle %}
+    {% assign block_array = block | sort %}
+    {% assign link_blocks = link_blocks | concat: block_array %}
+  {% endif %}
+{% endfor %}
+
+
+{% for block in link_blocks limit:3 %}
+  {% assign block_image = block.settings.image | default: null %}
+
+  {% assign block_title = block.settings.title | default: null %}
+
+  {% assign block_url = block.settings.url | default: false %}
+  <li megamenu-image class="tw-w-2/6">
+    <a dropdown-link-descedant class="tw-flex tw-flex-col tw-justify-end tw-items-center tw-ml-4 tw-relative" href="{{ block_url }}">
+        {% if block_image %}
+          <img
+            class="megamenu--images tw-w-auto tw-h-auto lg:tw-w-full lg:tw-h-auto tw-rounded-full lg:tw-rounded-none tw-object-cover"
+            data-src="{{ block_image | image_url: width: 500 }}"
+            alt="{{ block_title | escape }}"
+            width="{{ block_image.width }}"
+            height="{{ block_image.width | divided_by: block_image.aspect_ratio }}"
+          />
+        {% endif %}
+
+        {% if block_image != blank %}
+          {% if block_title %}
+            <div class="
+              tw-px-5 tw-py-3 tw-absolute tw-bottom-8
+              tw-border tw-border-solid | tw-shadow-none | tw-text-center | tw-uppercase tw-no-underline tw-bg-white tw-border-white hover:tw-bg-black hover:tw-border-black tw-text-black hover:tw-text-white 
+              "
+            >
+              <span class="tw-text-11.2/17 tw-font-normal tw-tracking-wider tw-m-0 tw-uppercase">
+                {{ block_title }}
+              </span>
+            </div>
+          {% endif %}
+        {% endif %}
+    </a>
+  </li>
+{% endfor %}

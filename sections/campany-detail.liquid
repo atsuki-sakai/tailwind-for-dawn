@@ -1,0 +1,99 @@
+
+<style>
+  .title {
+    
+  }
+  .campany-detail-container {
+    width: 100%;
+    max-width: 1080px;
+    margin: auto;
+    padding: 1rem 2rem;
+    margin-bottom: 5rem;
+    margin-top: 5rem;
+  }
+  .campany-item{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 1rem;
+    border-bottom: solid gray 1px;
+  }
+  .campany-item-left {
+    width: 40%;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
+  .campany-item-right {
+    width: 60%;
+    font-size: 14px;
+    letter-spacing: 1px;
+  }
+
+  @media screen and (min-widht: 1000px) {
+    .campany-detail-container {
+      
+    }
+    .campany-item{
+      
+    }
+    .campany-item-left {
+    
+    }
+    .campany-item-right {
+      
+    }
+  }
+</style>
+
+<div class="campany-detail-container va__fade-in">
+  <h2 class="title">
+    {{ section.settings.title | escape }}
+  </h2>
+  {% for block in section.blocks %}
+    <div class="campany-item">
+      <div  class="campany-item-left">{{ block.settings.section_title | escape }}</div>
+      <div class="campany-item-right">{{ block.settings.section_value | escape }}</div>
+    </div>
+  {% endfor %}
+</div>
+
+{% schema %}
+  {
+    "name": "会社概要",
+    "settings": [
+      {
+        "type": "text",
+        "id": "title",
+        "default": "会社概要",
+        "label": "タイトル"
+      }
+    ],
+    "blocks": [
+      {
+        "type": "section",
+        "name": "項目",
+        "limit": 7,
+        "settings": [
+          {
+            "type": "text",
+            "id": "section_title",
+            "default": "項目",
+            "label": "項目"
+          },
+          {
+            "type": "text",
+            "id": "section_value",
+            "default": "値",
+            "label": "値"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "会社概要"
+      }
+    ]
+  }
+{% endschema %}
